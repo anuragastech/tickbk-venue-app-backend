@@ -9,6 +9,8 @@ app.use("/",authRouter);
 
 
 
+
+
 connectDB()
   .then(() => {
     console.log("Connected to the database");
