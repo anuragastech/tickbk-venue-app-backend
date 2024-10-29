@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const Client = require("../models/client");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Event = require("../models/event");
@@ -13,7 +13,7 @@ const signupClient = async (req, res) => {
     const passwordHash = await bcrypt.hash(password, 10);
     console.log(passwordHash);
 
-    const user = new User({
+    const user = new Client({
       firstName,
       lastName,
       emailId: emailid,
@@ -34,7 +34,7 @@ const LoginClient = async (req, res) => {
   try {
     const { emailId, password } = req.body;
 
-    const user = await User.findOne({ emailId });
+    const user = await Client.findOne({ emailId });
     console.log(user, "njf");
 
     if (!user) {
@@ -104,9 +104,10 @@ const addEvent = async (req, res) => {
   
       res.status(201).json({ message: "Event created successfully", event: savedEvent });
     } catch (error) {
-      console.error("Error creating event:", error); // Log the error for debugging
+      console.error("Error creating event:", error); 
       res.status(500).json({ message: "Error occurred", error: error.message });
     }
   };
   
+
 module.exports = { LoginClient, signupClient, Logout, addEvent };

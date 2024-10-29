@@ -1,6 +1,6 @@
 
 const jwt=require("jsonwebtoken")
-const Client=require("../models/client")
+const User=require("../models/user")
 
 
 
@@ -19,7 +19,7 @@ const userAuth = async (req, res, next) => {
         const data = jwt.verify(token, "helloMone");
         const { _id } = data;
 
-        const user = await Client.findById(_id);
+        const user = await User.findById(_id);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
