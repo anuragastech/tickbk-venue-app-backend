@@ -77,6 +77,10 @@ const signupUser = async (req, res) => {
 const bookevent = async (req, res) => {
     try {
       const {  eventId } = req.body;
+      console.log("jbg");
+      
+      console.log(eventId);
+      
   const userId=req.user
       const event = await Event.findById(eventId);
       if (!event) {
@@ -104,6 +108,8 @@ const bookevent = async (req, res) => {
       res.status(500).json({ message: "An error occurred", error: error.message });
     }
   };
+
+  
 
 
 module.exports={LoginUser,signupUser,Logout,bookevent}
