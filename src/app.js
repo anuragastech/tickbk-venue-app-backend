@@ -1,8 +1,15 @@
 const express = require("express");
 const app = express();
 const connectDB =require("./confic/database")
+const cookieParser = require("cookie-parser");
+
+
+
+app.use(cookieParser());
 
 app.use(express.json())
+
+
 const authRouter=require("./router/authRouter")
 
 app.use("/",authRouter);

@@ -3,6 +3,8 @@ const User=require("../models/user")
 const bcrypt=require("bcryptjs")
 const jwt=require("jsonwebtoken")
 
+
+
 const signupClient=async(req,res)=>{
     // validateSignupData(req);
     console.log(req.body);
@@ -28,7 +30,7 @@ console.log("data not added");
 
 
 const LoginClient = async (req, res) => {
-    try {
+    try {  
         const { emailId, password } = req.body;
 
       
@@ -47,7 +49,7 @@ console.log(passwordCompare);
 
         const token = jwt.sign({_id: user._id }, "helloMone", { expiresIn: "1h" });
 
-        res.cookie("authToken", token );
+        res.cookie("token", token );
 
      
 
@@ -58,6 +60,34 @@ console.log(passwordCompare);
     }
 };
 
+const Logout = async (req, res) => {
+    try {
+        
+    
+        res.cookie("token", null, {
+          expires: new Date(Date.now()),
+        
+        });        
+        res.status(200).json({ message: "Logout successful" });
+    } catch (error) {
+        console.error("An error occurred during logout:", error);
+        res.status(500).json({ message: "An error occurred during logout" });
+    }
+};
+
+const addEvent=(req,res)=>{
+    try{
+
+loggedUser=req.user
+console.log(loggedUser,"jedijdiejdiej");
+
+res.json("success")
 
 
-module.exports={LoginClient,signupClient}
+
+    }catch(error){
+        res.status(500).json({message:"error occured "})
+    }
+}
+
+module.exports={LoginClient,signupClient,Logout,addEvent}
