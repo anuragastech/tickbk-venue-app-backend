@@ -20,4 +20,6 @@ router.post("/signup",userController.LoginUser)
 router.post('/login',userController.LoginUser)
 router.post("/logout",userAuth,userController.Logout)
 
+
+router.post("./bookEvent",userAuth,userController.bookevent)
 module.exports=router;

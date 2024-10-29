@@ -74,4 +74,36 @@ const signupUser = async (req, res) => {
 
 
 
-module.exports={LoginUser,signupUser,Logout}
+const bookevent = async (req, res) => {
+    try {
+      const {  eventId } = req.body;
+  const userId=req.user
+      const event = await Event.findById(eventId);
+      if (!event) {
+        return res.status(404).json({ message: "Event not found" });
+      }
+  
+      const totalBookings = event.attendees.length;
+      if (totalBookings >= event.capacity) {
+        return res.status(400).json({ message: "Event is fully booked" });
+      }
+  
+      const booking = {
+        user: userId,
+        paymentStatus: "pending", 
+        bookedAt: new Date(),
+      };
+  
+      event.attendees.push(booking);
+  
+      await event.save();
+  
+      res.status(200).json({ message: "Booking successful", event });
+    } catch (error) {
+      console.error("Error booking event:", error);
+      res.status(500).json({ message: "An error occurred", error: error.message });
+    }
+  };
+
+
+module.exports={LoginUser,signupUser,Logout,bookevent}
