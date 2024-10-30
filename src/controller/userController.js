@@ -125,26 +125,26 @@ const bookevent = async (req, res) => {
     }
   };
   
-  const GetProfile =async(req,res)=>{
-    try{
+//   const GetProfile =async(req,res)=>{
+//     try{
 
 
-      const loggedUser=req.user
-      if(!loggedUser){
-        res.json({massage:'there is a error occured ,please check if you are logged in!!'})
-      }
+//       const loggedUser=req.user
+//       if(!loggedUser){
+//         res.json({massage:'there is a error occured ,please check if you are logged in!!'})
+//       }
 
-      const profileData=loggedUser 
-      res.json({message:"success",profileData})
-    }catch{
-res.json({message:"error in fetching profile informatioin"})
-    }
-  }
+//       const profileData=loggedUser 
+//       res.json({message:"success",profileData})
+//     }catch{
+// res.json({message:"error in fetching profile informatioin"})
+//     }
+//   }
 
 
 const profile = async (req, res) => {
   try {
-    const user = req.user; // The user is already authenticated and attached to req.user by userAuth
+    const user = req.user;
     res.status(200).json({ message: "Profile retrieved successfully", user });
   } catch (error) {
     console.error("Error fetching profile:", error);
@@ -192,4 +192,4 @@ const profileDelete = async (req, res) => {
 };
 
 
-module.exports={LoginUser,signupUser,Logout,bookevent,Getevents,GetProfile,profile,profileEdit,profileDelete}
+module.exports={LoginUser,signupUser,Logout,bookevent,Getevents,profile,profileEdit,profileDelete}
