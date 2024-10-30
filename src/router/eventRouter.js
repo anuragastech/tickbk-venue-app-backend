@@ -10,6 +10,7 @@ router.post("/addEvent",clientAuth,clientController.addEvent)
 router.get("/events", userController.Getevents); 
 
 router.post("/bookEvent",userAuth,userController.bookevent)
+router.get("/events", clientController.Getevents); 
 
 
 

@@ -125,6 +125,21 @@ const bookevent = async (req, res) => {
     }
   };
   
+  const GetProfile =async(req,res)=>{
+    try{
 
 
-module.exports={LoginUser,signupUser,Logout,bookevent,Getevents}
+      const loggedUser=req.user
+      if(!loggedUser){
+        res.json({massage:'there is a error occured ,please check if you are logged in!!'})
+      }
+
+      const profileData=loggedUser 
+      res.json({message:"success",profileData})
+    }catch{
+res.json({message:"error in fetching profile informatioin"})
+    }
+  }
+
+
+module.exports={LoginUser,signupUser,Logout,bookevent,Getevents,GetProfile}

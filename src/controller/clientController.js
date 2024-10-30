@@ -110,4 +110,21 @@ const addEvent = async (req, res) => {
   };
   
 
-module.exports = { LoginClient, signupClient, Logout, addEvent };
+
+  const Getevents = async (req, res) => {
+    try {
+      console.log("Fetching events...");
+  
+      const eventsData = await Event.find({});
+  
+      res.status(200).json({
+        message: "success",
+        events: eventsData, 
+      });
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      res.status(500).json({ message: "Error occurred" });
+    }
+  };
+
+module.exports = { LoginClient, signupClient, Logout, addEvent ,Getevents };
