@@ -108,8 +108,67 @@ const addEvent = async (req, res) => {
       res.status(500).json({ message: "Error occurred", error: error.message });
     }
   };
-  
 
+  const editEvent = async (req, res) => {
+    try {
+      const { eventId } = req.params; 
+      const {
+        title,
+        description,
+        location,
+        date,
+        time,
+        capacity,
+        tags,
+        price,
+      } = req.body;
+  
+      console.log("Edit request for event:", eventId, req.body);
+  
+   
+      const updatedEvent = await Event.findByIdAndUpdate(
+        eventId,
+        {
+          title,
+          description,
+          location,
+          date: new Date(date), 
+          time,
+          capacity,
+          tags,
+          price,
+        },
+        { new: true, runValidators: true } 
+      );
+  
+      if (!updatedEvent) {
+        return res.status(404).json({ message: "Event not found" });
+      }
+  
+      res.status(200).json({ message: "Event updated successfully", event: updatedEvent });
+    } catch (error) {
+      console.error("Error updating event:", error);
+      res.status(500).json({ message: "Error occurred", error: error.message });
+    }
+  };
+  
+  
+  const deleteEvent = async (req, res) => {
+    try {
+      const { eventId } = req.params; 
+  
+      const deletedEvent = await Event.findByIdAndDelete(eventId);
+  
+      if (!deletedEvent) {
+        return res.status(404).json({ message: "Event not found" });
+      }
+  
+      res.status(200).json({ message: "Event deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      res.status(500).json({ message: "Error occurred while deleting event", error: error.message });
+    }
+  };
 
   const Getevents = async (req, res) => {
     try {
@@ -127,4 +186,4 @@ const addEvent = async (req, res) => {
     }
   };
 
-module.exports = { LoginClient, signupClient, Logout, addEvent ,Getevents };
+module.exports = { LoginClient, signupClient, Logout, addEvent ,Getevents ,editEvent,deleteEvent};

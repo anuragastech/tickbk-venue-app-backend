@@ -3,8 +3,6 @@ const app = express();
 const connectDB =require("./confic/database")
 const cookieParser = require("cookie-parser");
 
-
-
 app.use(cookieParser());
 
 app.use(express.json())
@@ -18,9 +16,6 @@ const profileRouter=require("./router/profileRouter")
 app.use("/",authRouter);
 app.use("/",eventRouter);
 app.use("/",profileRouter);
-
-
-
 
 
 connectDB()

@@ -3,11 +3,6 @@ const jwt=require("jsonwebtoken")
 const Client=require("../models/client")
 
 
-
-
-
-
-
 const userAuth = async (req, res, next) => {
     try {
         const cookies = req.cookies;

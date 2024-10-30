@@ -70,10 +70,7 @@ const signupUser = async (req, res) => {
       res.status(500).json({ message: "An error occurred during logout" });
     }
   };
-  
-
-
-
+ 
 const bookevent = async (req, res) => {
     try {
       const {  eventId } = req.body;
@@ -86,6 +83,9 @@ const bookevent = async (req, res) => {
       if (!event) {
         return res.status(404).json({ message: "Event not found" });
       }
+      const bookedEvents = await Event.find({ "attendees.user": userId })
+      .populate("attendees.user", "firstName lastName emailId") 
+      .exec();
   
       const totalBookings = event.attendees.length;
       if (totalBookings >= event.capacity) {
@@ -102,7 +102,7 @@ const bookevent = async (req, res) => {
   
       await event.save();
   
-      res.status(200).json({ message: "Booking successful", event });
+      res.status(200).json({ message: "Booking successful", event ,bookedEvents});
     } catch (error) {
       console.error("Error booking event:", error);
       res.status(500).json({ message: "An error occurred", error: error.message });
@@ -140,6 +140,8 @@ const bookevent = async (req, res) => {
 res.json({message:"error in fetching profile informatioin"})
     }
   }
+
+
 
 
 module.exports={LoginUser,signupUser,Logout,bookevent,Getevents,GetProfile}
