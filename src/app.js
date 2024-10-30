@@ -11,8 +11,13 @@ app.use(express.json())
 
 
 const authRouter=require("./router/authRouter")
+const eventRouter=require("./router/eventRouter")
+const profileRouter=require("./router/profileRouter")
+
 
 app.use("/",authRouter);
+app.use("/",eventRouter);
+app.use("/",profileRouter);
 
 
 
