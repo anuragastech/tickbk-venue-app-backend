@@ -7,6 +7,12 @@ const  clientController=require("../controller/clientController")
 const userController=require("../controller/userController")
 
 
+router.get("/profile", clientAuth, clientController.profile);
+
+
+router.get("/profile", userAuth, userController.profile);
+router.put("/profile/user", userAuth, userController.profileEdit);
+router.delete("/profile", userAuth, userController.profileDelete);
 
 
 
