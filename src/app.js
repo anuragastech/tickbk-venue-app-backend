@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 const connectDB =require("./confic/database")
 const cookieParser = require("cookie-parser");
+const cors = require("cors"); 
+
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 app.use(cookieParser());
 
@@ -22,7 +25,7 @@ connectDB()
   .then(() => {
     console.log("Connected to the database");
     app.listen(3005, () => {
-      console.log("Server is running on port 3000");
+      console.log("Server is running on port 3005");
     });
   })
   .catch((error) => {

@@ -7,13 +7,13 @@ const userAuth=require("../middlewares/userAuth")
 const  clientController=require("../controller/clientController")
 const userController=require("../controller/userController")
 
-router.post("/signup",clientController.signupClient)
+router.post("/signup/signup",clientController.signupClient)
 
 router.post('/login/client',clientController.LoginClient)
 router.post("/logout/client",clientAuth,clientController.Logout)
 
 
-router.post("/signup",userController.LoginUser)
+router.post("/signup",userController.signupUser)
 
 router.post('/login',userController.LoginUser)
 router.post("/logout",userAuth,userController.Logout)

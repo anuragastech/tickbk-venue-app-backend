@@ -33,6 +33,7 @@ const signupClient = async (req, res) => {
 const LoginClient = async (req, res) => {
   try {
     const { emailId, password } = req.body;
+console.log(req.body,"dkkd");
 
     const user = await Client.findOne({ emailId });
     console.log(user, "njf");

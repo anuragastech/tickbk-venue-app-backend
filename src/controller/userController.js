@@ -3,37 +3,43 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Event = require("../models/event");
 
-
 const signupUser = async (req, res) => {
-    // validateSignupData(req);
-    console.log(req.body);
-  
-    try {
-      const { firstName, lastName, emailid, age, skill, password, gender } =
-        req.body;
-      const passwordHash = await bcrypt.hash(password, 10);
-      console.log(passwordHash);
-  
-      const user = new User({
-        firstName,
-        lastName,
-        emailId: emailid,
-        password: passwordHash,
-        age,
-        skill,
-        gender,
-      });
-      await user.save();
-  
-      res.send("success");
-    } catch (err) {
-      console.log("data not added");
-    }
-  };
+  console.log(req.body);
+
+  try {
+    const { firstName, lastName, email, age, address, password, gender } = req.body;
+
+    const passwordHash = await bcrypt.hash(password, 10);
+    console.log(passwordHash);
+
+    const user = new User({
+      firstName,
+      lastName,
+      emailId: email,
+      password: passwordHash,
+      age,
+      address,
+      gender,
+    });
+
+    await user.save();
+    console.log(user);
+
+    res.status(201).json({ message: "User registered successfully" });
+  } catch (err) {
+    console.error("Signup error:", err);
+    res.status(500).json({ message: "An error occurred; user could not be registered." });
+  }
+};
+
+
+
+
   
   const LoginUser = async (req, res) => {
     try {
       const { emailId, password } = req.body;
+  console.log(req.body);
   
       const user = await User.findOne({ emailId });
       console.log(user, "njf");

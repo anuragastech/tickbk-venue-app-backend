@@ -39,7 +39,7 @@ const userSchema=mongoose.Schema({
             }
           },
         },
-        skill: {
+        address: {
           type: [String],
         }
       }, {
