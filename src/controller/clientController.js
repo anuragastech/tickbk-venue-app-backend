@@ -2,6 +2,14 @@ const Client = require("../models/client");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Event = require("../models/event");
+const cloudinary = require('../confic/cloudinery')
+const multer = require("../confic/multer");
+const upload = multer.single("image");
+
+
+
+
+
 
 const signupClient = async (req, res) => {
   // validateSignupData(req);
@@ -70,45 +78,72 @@ const Logout = async (req, res) => {
   }
 };
 
-const addEvent = async (req, res) => {
-    try {
+const addEvents = async (req, res) => {
+  try {
+
+    console.log("fmkldfsl");
+    
       const {
-        title,
-        description, 
-        location,
-        date,
-        time,
-        capacity, 
-        tags,
-        price,
+          title,
+          description,
+          location,
+          date,
+          time,
+          capacity,
+          tags,
+          price,
       } = req.body;
-  
-      console.log(req.body);
-  
-      const eventBook = new Event({
-        title,
-        description,
-        date: new Date(date), 
-        time,
-        capacity, 
-        tags,
-        price,
-      });
-  
-      console.log(eventBook); 
-  
-      const savedEvent = await eventBook.save(); 
-  
-      if (!savedEvent) {
-        return res.json({ message: "Data not saved" });
+console.log(req.body,"console");
+
+      if (!req.file) {
+          return res.status(400).json({ message: "No image uploaded." });
       }
+
+      const desiredWidth = 3600;
+      const desiredHeight = 1500;
+
+      const result = await cloudinary.uploader.upload(req.file.path, {
+          width: desiredWidth,
+          height: desiredHeight,
+          crop: 'scale' 
+      });
+console.log(result,"result");
+
+      // Create a new event instance
+      const eventBook = new Event({
+          title,
+          description,
+          location,
+          date: new Date(date),
+          time,
+          capacity,
+          tags,
+          price,
+          image: {
+              public_id: result.public_id,
+              url: result.secure_url
+          }
+      });
+// console.log({
+//   public_id: result.public_id,
+//   url: result.secure_url,
   
+// });
+
+      const savedEvent = await eventBook.save();
+console.log(savedEvent,"saved");
+
+      if (!savedEvent) {
+          return res.status(400).json({ message: "Data not saved" });
+      }
+
       res.status(201).json({ message: "Event created successfully", event: savedEvent });
-    } catch (error) {
-      console.error("Error creating event:", error); 
+  } catch (error) {
+      console.error("Error creating event:", error);
       res.status(500).json({ message: "Error occurred", error: error.message });
-    }
-  };
+  }
+};
+
 
   const editEvent = async (req, res) => {
     try {
@@ -199,4 +234,4 @@ const profile = async (req, res) => {
   }
 };
 
-module.exports = { LoginClient, signupClient, Logout, addEvent ,Getevents ,editEvent,deleteEvent,profile};
+module.exports = { LoginClient, signupClient, Logout, addEvents ,Getevents ,editEvent,deleteEvent,profile};
