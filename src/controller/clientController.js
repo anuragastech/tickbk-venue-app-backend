@@ -58,7 +58,8 @@ console.log(req.body,"dkkd");
 
     const token = jwt.sign({ _id: user._id }, "helloMone", { expiresIn: "1h" });
 
-    res.cookie("token", token);
+    res.cookie("token", token,{    httpOnly: true,    sameSite: "None"
+    });
 
     res.status(200).json({ message: "Login successful", userId: user._id });
   } catch (error) {
@@ -227,6 +228,8 @@ console.log(savedEvent,"saved");
 const profile = async (req, res) => {
   try {
     const user = req.user;
+    console.log(user);
+    
     res.status(200).json({ message: "Profile retrieved successfully", user });
   } catch (error) {
     console.error("Error fetching profile:", error);

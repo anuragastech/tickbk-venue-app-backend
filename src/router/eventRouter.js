@@ -11,7 +11,7 @@ const  clientController=require("../controller/clientController")
 const userController=require("../controller/userController")
 
 router.post("/addEvents",upload,clientController.addEvents)
-router.get("/events", userController.Getevents); 
+router.get("/events",userController.Getevents); 
 
 router.post("/bookEvent",userAuth,userController.bookevent)
 router.get("/events", clientController.Getevents); 
