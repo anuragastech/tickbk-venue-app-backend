@@ -77,43 +77,54 @@ const signupUser = async (req, res) => {
     }
   };
  
-const bookevent = async (req, res) => {
+  const bookevent = async (req, res) => {
     try {
-      const {  eventId } = req.body;
-      console.log("jbg");
-      
-      console.log(eventId);
-      
-  const userId=req.user
-      const event = await Event.findById(eventId);
-      if (!event) {
-        return res.status(404).json({ message: "Event not found" });
-      }
-      const bookedEvents = await Event.find({ "attendees.user": userId })
-      .populate("attendees.user", "firstName lastName emailId") 
-      .exec();
-  
-      const totalBookings = event.attendees.length;
-      if (totalBookings >= event.capacity) {
-        return res.status(400).json({ message: "Event is fully booked" });
-      }
-  
-      const booking = {
-        user: userId,
-        paymentStatus: "pending", 
-        bookedAt: new Date(),
-      };
-  
-      event.attendees.push(booking);
-  
-      await event.save();
-  
-      res.status(200).json({ message: "Booking successful", event ,bookedEvents});
+        const { eventId } = req.params;
+        const userId = req.user; // Ensure this is correctly passed from userAuth middleware
+
+        // Retrieve the event by ID
+        const event = await Event.findById(eventId);
+
+        // Check if the event exists
+        if (!event) {
+            return res.status(404).json({ message: "Event not found" });
+        }
+
+        // Initialize `attendees` if it's undefined
+        if (!Array.isArray(event.attendees)) {
+            event.attendees = [];
+        }
+
+        // Check if the user has already booked this event
+        const alreadyBooked = event.attendees.some((attendee) => attendee.user.toString() === userId.toString());
+        if (alreadyBooked) {
+            return res.status(400).json({ message: "You have already booked this event." });
+        }
+
+        // Check if the event is fully booked
+        const totalBookings = event.attendees.length;
+        if (totalBookings >= event.capacity) {
+            return res.status(400).json({ message: "Event is fully booked" });
+        }
+
+        // Add the new booking
+        const booking = {
+            user: userId,
+            paymentStatus: "pending",
+            bookedAt: new Date(),
+        };
+        event.attendees.push(booking);
+
+        // Save the updated event
+        await event.save();
+
+        res.status(200).json({ message: "Booking successful", event });
     } catch (error) {
-      console.error("Error booking event:", error);
-      res.status(500).json({ message: "An error occurred", error: error.message });
+        console.error("Error booking event:", error);
+        res.status(500).json({ message: "An error occurred", error: error.message });
     }
-  };
+};
+
 
   const Getevents = async (req, res) => {
     try {

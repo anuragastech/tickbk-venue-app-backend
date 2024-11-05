@@ -22,20 +22,20 @@ const eventSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    // attendees: [
-    //     {
-    //         user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    //         paymentStatus: { type: String, enum: ["pending", "completed"], default: "pending" },
-    //         bookedAt: { type: Date, default: Date.now },
-    //     },
-    // ],
+    attendees: [
+        {
+            user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+            paymentStatus: { type: String, enum: ["pending", "completed"], default: "pending" },
+            bookedAt: { type: Date, default: Date.now },
+        },
+    ],
     capacity: {
         type: Number,
         required: true,
     },
-    tags: {
+    tags:[ {
         type:String,
-    },
+    }],
     price: {
         type: Number,
         required: true,

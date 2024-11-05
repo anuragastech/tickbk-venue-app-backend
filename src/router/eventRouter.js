@@ -13,7 +13,7 @@ const userController=require("../controller/userController")
 router.post("/addEvents",upload,clientController.addEvents)
 router.get("/events",userController.Getevents); 
 
-router.post("/bookEvent",userAuth,userController.bookevent)
+router.post("/bookEvent/:eventId",userAuth,userController.bookevent)
 router.get("/events", clientController.Getevents); 
 router.delete("/events/:eventId", userAuth, clientController.deleteEvent);
 router.put("/events/:eventId", userAuth, clientController.editEvent);
