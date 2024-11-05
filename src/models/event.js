@@ -42,10 +42,9 @@ const eventSchema = new mongoose.Schema({
         min: 0,
     },
     image: {
-        public_id: {
-            type: String,
-            required: true,
-        },
+        public_id: { type: String, required: false },
+        url: { type: String, required: false }
+    ,
         url: {
             type: String,
             required: true,
