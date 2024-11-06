@@ -210,18 +210,21 @@ console.log(savedEvent,"saved");
   const Getevents = async (req, res) => {
     try {
       console.log("Fetching events...");
-  
+    
       const eventsData = await Event.find({});
+    console.log(eventsData);
+    
   
       res.status(200).json({
         message: "success",
-        events: eventsData, 
+        events: eventsData, // This should be an array with each event object containing an `image` property
       });
     } catch (error) {
       console.error("Error fetching events:", error);
       res.status(500).json({ message: "Error occurred" });
     }
   };
+  
 
 
 
