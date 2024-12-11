@@ -1,13 +1,11 @@
 {
   "name": "tickbk-venue",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "src/app.js", 
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.5.1",
@@ -21,6 +19,5 @@
     "nodemon": "^3.1.7",
     "path": "^0.12.7",
     "validate": "^5.2.0"
-  },
-  "description": ""
+  }
 }
