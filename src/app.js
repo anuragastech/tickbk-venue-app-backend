@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const connectDB = require("./config/database");
+const connectDB = require("./confic/database");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
